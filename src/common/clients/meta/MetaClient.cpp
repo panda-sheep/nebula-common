@@ -3022,7 +3022,14 @@ StatusOr<LeaderMap> MetaClient::loadLeader() {
             }
         }
         LOG(INFO) << "Load leader of " << item.hostAddr
-                  << " in " << item.get_leader_parts().size() << " space";
+                  << " in " << item.get_leader_parts().size() << " space"
+                  << " role = " << meta::cpp2::_HostRole_VALUES_TO_NAMES.at(item.get_role());
+        for (auto&e : item.get_leader_parts()) {
+            LOG(INFO) << "space " << e.first;
+            for (auto& v : e.second) {
+                LOG(INFO) << "part id " << v;
+            }
+        }
     }
     LOG(INFO) << "Load leader ok";
     return leaderMap;
